@@ -1,0 +1,50 @@
+voice.mp3
+text.txt
+batch
+.venv
+
+
+#google api call
+client_secrets.json
+
+#tiktok api call
+config.py
+
+
+# Ignore environment variables
+.env
+
+# Ignore sensitive Google API and TikTok API credentials
+client_secrets.json
+config.py
+
+# Ignore compiled Python files
+__pycache__/
+
+# Ignore temporary or backup files
+*.bak
+*.swp
+
+# Ignore audio and video files
+*.mp3
+*.mp4
+
+# Ignore data files
+stories.csv
+stories.txt
+
+# Ignore TikTok voice generation folder (contains temporary files)
+tiktok_voice/
+
+# Ignore virtual environment folder
+.venv/
+
+# Ignore background videos
+Backgrounds/
+
+# Ignore other files that should not be pushed to GitHub
+voice.mp3
+text.txt
+batch
+
+.env
