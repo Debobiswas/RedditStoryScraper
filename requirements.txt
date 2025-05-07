@@ -1,0 +1,11 @@
+flask
+flask-socketio
+werkzeug
+pandas
+psutil
+pydub
+pytube
+moviepy
+python-dotenv
+praw
+eventlet

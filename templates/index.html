@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reddit Story Scraper</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Reddit Story Scraper</h1>
+            <p class="text-gray-600">Create engaging videos from Reddit stories</p>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <div class="mb-8 flex items-center justify-between">
+            <div class="flex space-x-4 border-b flex-1">
+                <button class="tab-button active px-4 py-2 text-blue-600 border-b-2 border-blue-600" data-tab="scrape">Scrape Stories</button>
+                <button class="tab-button px-4 py-2 text-gray-600" data-tab="create">Create Video</button>
+                <button class="tab-button px-4 py-2 text-gray-600" data-tab="manage">Manage Content</button>
+            </div>
+            <button id="downloadYoutubeNavBtn" class="ml-4 bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition duration-200 flex items-center">
+                <i class="fab fa-youtube mr-2"></i>Download YouTube
+            </button>
+        </div>
+
+        <!-- Scrape Section -->
+        <div id="scrape" class="tab-content">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-semibold mb-4">Scrape Stories</h2>
+                <form id="scrapeForm" class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">Subreddit URL</label>
+                        <input type="text" name="subreddit" placeholder="https://www.reddit.com/r/confession/" 
+                               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Number of Posts</label>
+                        <input type="number" name="num_posts" value="1" min="1" max="10"
+                               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <button type="submit" 
+                            class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">
+                        <i class="fas fa-download mr-2"></i>Scrape Stories
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Create Video Section -->
+        <div id="create" class="tab-content hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+                <div class="bg-white rounded-lg shadow-md p-6 flex flex-col h-full">
+                    <h2 class="text-2xl font-semibold mb-4">Create Video</h2>
+                    <form id="videoForm" class="space-y-4 flex flex-col flex-1">
+                        <!-- Story Selection List -->
+                        <div>
+                            <label class="block text-gray-700 mb-2">Select Stories</label>
+                            <div id="storySelection" class="space-y-2 overflow-y-auto p-2 border rounded-lg" style="height:24.5rem">
+                                <!-- Stories will be populated here -->
+                            </div>
+                            <div id="selectedStoriesPreview" class="mt-4"></div>
+                        </div>
+                        <!-- Background Video Selection -->
+                        <div>
+                            <label class="block text-gray-700 mb-2">Background Video</label>
+                            <div class="flex items-center space-x-4">
+                                <select name="background" class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <!-- Background options will be populated by JavaScript -->
+                                </select>
+                                <button type="button" id="randomizeBackgroundBtn" 
+                                        class="bg-purple-500 text-white py-2 px-4 rounded-lg hover:bg-purple-600 transition duration-200">
+                                    <i class="fas fa-random mr-2"></i>Random
+                                </button>
+                            </div>
+                        </div>
+                        <button type="submit"
+                                class="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-200">
+                            <i class="fas fa-video mr-2"></i>Create Videos from Selected
+                        </button>
+                    </form>
+                </div>
+                <!-- Preview Section -->
+                <div class="bg-white rounded-lg shadow-md p-6 flex flex-col h-full">
+                    <h2 class="text-2xl font-semibold mb-4">Preview</h2>
+                    <div id="previewSection" class="flex-1 flex flex-col">
+                        <div class="bg-gray-200 rounded-lg flex items-center justify-center flex-1">
+                            <p class="text-gray-500">Video preview will appear here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Content Section -->
+        <div id="manage" class="tab-content hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Stories Management -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-2xl font-semibold mb-4">Stories</h2>
+                    <button id="uploadYoutubeBtn" class="mb-4 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-200 w-full flex items-center justify-center">
+                        <i class="fab fa-youtube mr-2"></i>Upload All to YouTube
+                    </button>
+                    <button id="cleanupTempAudioBtn" class="mb-4 bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600 transition duration-200 w-full flex items-center justify-center">
+                        <i class="fas fa-broom mr-2"></i>Clean Up Temp Audio Files
+                    </button>
+                    <div id="storiesList" class="space-y-4">
+                        <!-- Stories will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Videos Management -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-2xl font-semibold mb-4">Videos</h2>
+                    <div id="videosList" class="grid grid-cols-1 gap-4">
+                        <!-- Video cards will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Section -->
+        <div id="progressSection" class="mt-8 hidden">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-semibold mb-4">Processing Status</h2>
+                <div class="space-y-6">
+                    <!-- Progress Steps -->
+                    <div class="grid grid-cols-4 gap-4 mb-6">
+                        <div class="progress-step" data-step="audio">
+                            <div class="step-icon bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-microphone"></i>
+                            </div>
+                            <p class="text-sm text-center">Generating Audio</p>
+                        </div>
+                        <div class="progress-step" data-step="speed">
+                            <div class="step-icon bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <p class="text-sm text-center">Speeding Up</p>
+                        </div>
+                        <div class="progress-step" data-step="background">
+                            <div class="step-icon bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <p class="text-sm text-center">Processing Video</p>
+                        </div>
+                        <div class="progress-step" data-step="final">
+                            <div class="step-icon bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <p class="text-sm text-center">Finalizing</p>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm text-gray-600">
+                            <span id="currentStep">Initializing...</span>
+                            <span id="progressPercent">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-4">
+                            <div id="progressBar" class="bg-blue-500 h-4 rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Status Details -->
+                    <div id="statusDetails" class="bg-gray-50 p-4 rounded-lg">
+                        <div class="flex items-center space-x-2">
+                            <div id="statusSpinner" class="spinner"></div>
+                            <p id="statusText" class="text-gray-600">Processing...</p>
+                        </div>
+                        <p id="statusSubtext" class="text-sm text-gray-500 mt-2"></p>
+                    </div>
+
+                    <!-- Download Section -->
+                    <div id="downloadButton" class="text-center hidden">
+                        <div class="bg-green-50 p-4 rounded-lg mb-4">
+                            <i class="fas fa-check-circle text-green-500 text-4xl mb-2"></i>
+                            <p class="text-green-600 font-semibold">Video Created Successfully!</p>
+                        </div>
+                        <a href="#" class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition duration-200 inline-flex items-center">
+                            <i class="fas fa-download mr-2"></i>Download Video
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Story Modal -->
+        <div id="storyModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-lg w-[400px] h-[350px] flex flex-col">
+                <div class="p-4 border-b flex justify-between items-center">
+                    <h3 id="modalTitle" class="text-xl font-semibold"></h3>
+                    <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="modalContent" class="p-4 overflow-y-auto flex-1">
+                    <!-- Story content will be inserted here -->
+                </div>
+                <div class="p-4 border-t flex justify-end">
+                    <button id="useStoryBtn" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">
+                        <i class="fas fa-video mr-2"></i>Use for Video
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Area -->
+        <div id="notificationArea" class="fixed bottom-4 right-4 space-y-2"></div>
+
+        <!-- Video Preview Modal -->
+        <div id="videoPreviewModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-lg flex flex-col" style="width:400px; height:700px;">
+                <div class="p-4 border-b flex justify-between items-center">
+                    <h3 class="text-xl font-semibold">Video Preview</h3>
+                    <button id="closeVideoPreview" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="flex-1 flex items-center justify-center">
+                    <video id="videoPreviewPlayer" controls style="max-width:100%; max-height:600px; border-radius:8px;"></video>
+                </div>
+            </div>
+        </div>
+
+        <!-- YouTube Download Modal -->
+        <div id="youtubeDownloadModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-lg w-[400px] flex flex-col">
+                <div class="p-4 border-b flex justify-between items-center">
+                    <h3 class="text-xl font-semibold">Download YouTube Video</h3>
+                    <button id="closeYoutubeDownloadModal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="p-4 flex flex-col space-y-4">
+                    <input id="youtubeUrlInput" type="text" placeholder="Enter YouTube video URL" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button id="startYoutubeDownloadBtn" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-200 flex items-center justify-center">
+                        <i class="fab fa-youtube mr-2"></i>Start Download
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html> 
