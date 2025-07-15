@@ -1,0 +1,5 @@
+openai-whisper==20231117
+edge-tts==6.1.10
+profanity-check==1.0.1
+torch==2.3.1
+torchaudio==2.3.1 
