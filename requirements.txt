@@ -9,3 +9,5 @@ moviepy
 python-dotenv
 praw
 eventlet
+
+yt-dlp
