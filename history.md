@@ -1,5 +1,28 @@
 # Project Change History
 
+## 2025-07-16 at 05:11 - Backend YouTube Download Fix
+
+### Modified Files
+- `backend/Dockerfile`
+- `docker-compose.yml`
+- `backend/src/routes/backgrounds.js`
+
+### Change Description
+- Added Python3 and yt-dlp installation to backend Dockerfile
+- Mounted `video-processor` directory in backend service via docker-compose
+- Updated background download route to use `python3`, log output, and remove detached spawn
+
+### Rationale
+- Enable YouTube video downloads from the backend container
+- Surface errors from the Python download process for easier debugging
+
+### Potential Impacts
+- Backend image size increases slightly due to Python installation
+- Download logs now appear in backend container output
+
+### Implemented By
+- AI Assistant
+
 ## 2024-02-15 at 15:45 - YouTube Downloader Implementation
 
 ### Modified Files

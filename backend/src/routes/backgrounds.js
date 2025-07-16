@@ -35,17 +35,27 @@ router.post('/download', (req, res) => {
   const pythonScript = path.join(__dirname, '..', '..', '..', 'video-processor', 'download_from_url.py');
 
   try {
-    const pythonProcess = spawn('python', ['-u', pythonScript, '--url', youtubeUrl, '--output-dir', categoryDir], {
-      detached: true,
-      stdio: 'ignore'
+    const pythonProcess = spawn('python3', ['-u', pythonScript, '--url', youtubeUrl, '--output-dir', categoryDir]);
+
+    pythonProcess.stdout.on('data', (data) => {
+      console.log(`[PYTHON STDOUT] ${data}`);
+    });
+
+    pythonProcess.stderr.on('data', (data) => {
+      console.error(`[PYTHON STDERR] ${data}`);
     });
 
     pythonProcess.on('error', (err) => {
-      // This will log an error if the process fails to start.
       console.error('Failed to start Python download process:', err);
     });
 
-    pythonProcess.unref();
+    pythonProcess.on('close', (code) => {
+      if (code !== 0) {
+        console.error(`Download process exited with code ${code}`);
+      } else {
+        console.log('Background video download completed successfully');
+      }
+    });
 
     res.status(202).json({ message: 'Download started successfully! The video will appear in the list shortly.' });
 

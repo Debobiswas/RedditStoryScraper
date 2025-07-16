@@ -2,6 +2,10 @@ FROM node:18-alpine
 
 WORKDIR /app
 
+# Install Python and yt-dlp for background downloads
+RUN apk add --no-cache python3 py3-pip \
+    && pip3 install --no-cache-dir yt-dlp
+
 # Copy package files
 COPY package*.json ./
 
@@ -18,4 +22,4 @@ RUN mkdir -p uploads output temp
 EXPOSE 3001
 
 # Start the application
-CMD ["npm", "start"] 
+CMD ["npm", "start"]
