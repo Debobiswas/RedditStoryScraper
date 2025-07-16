@@ -33,6 +33,7 @@ services:
       - /app/node_modules
       - ./uploads:/app/uploads
       - ./output:/app/output
+      - ./video-processor:/app/video-processor
     depends_on:
       - video-processor
 
