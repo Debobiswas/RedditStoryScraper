@@ -55,9 +55,9 @@ app.use('/api/backgrounds', backgroundRoutes);
 app.use('/api/videos', videosRoutes);
 
 // Serve generated videos from the root output folder
-app.use('/output', express.static(path.join(__dirname, '..', '..', 'output')));
+app.use('/output', express.static(path.join(__dirname, '..', 'output')));
 // Serve background videos
-app.use('/backgrounds', express.static(path.join(__dirname, '..', '..', 'video-processor', 'backgrounds')));
+app.use('/backgrounds', express.static(path.join(__dirname, '..', 'video-processor', 'backgrounds')));
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

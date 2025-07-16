@@ -6,7 +6,8 @@ const { promises: fsPromises } = require('fs');
 
 const router = express.Router();
 
-const backgroundVideosDir = path.join(__dirname, '..', '..', '..', 'downloads');
+// Use repo-level downloads directory mounted into the container
+const backgroundVideosDir = path.join(__dirname, '..', '..', 'downloads');
 
 // Ensure the directory for background videos exists
 if (!fs.existsSync(backgroundVideosDir)) {
@@ -32,7 +33,7 @@ router.post('/download', (req, res) => {
     fs.mkdirSync(categoryDir, { recursive: true });
   }
 
-  const pythonScript = path.join(__dirname, '..', '..', '..', 'video-processor', 'download_from_url.py');
+  const pythonScript = path.join(__dirname, '..', '..', 'video-processor', 'download_from_url.py');
 
   try {
     const pythonProcess = spawn('python3', ['-u', pythonScript, '--url', youtubeUrl, '--output-dir', categoryDir]);

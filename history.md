@@ -105,3 +105,22 @@
 
 ### Implemented By
 - Initial Project Setup Team 
+## 2025-07-16 at 06:08 - Corrected Download Paths
+
+### Modified Files
+- `backend/src/routes/backgrounds.js`
+- `backend/src/index.js`
+
+### Change Description
+- Fixed relative paths for downloads and Python script so they resolve within the backend container
+- Adjusted static file paths for output and background serving
+
+### Rationale
+- The previous paths resolved outside the `/app` directory, causing the download script to fail
+
+### Potential Impacts
+- Background downloads should now execute correctly
+- Static serving uses the proper directories
+
+### Implemented By
+- AI Assistant
