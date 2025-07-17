@@ -9,24 +9,31 @@ import edge_tts
 from utils.logger import setup_logger
 
 class TextToSpeechGenerator:
-    def __init__(self, voice_type: str = 'female_fast'):
+    def __init__(self, voice_type: str = 'female'):
         self.logger = setup_logger('text_to_speech')
         
         # Voice and rate configuration using edge-tts voices
-        # A good voice is 'en-US-AriaNeural'. '+' indicates a faster rate.
         self.voice_config = {
-            'female_fast': {
+            'female': {
                 'voice': 'en-US-AriaNeural',
-                'rate': '+20%'  # 20% faster than normal
+                'rate': '+20%'
             },
-            'male_normal': {
+            'male': {
                 'voice': 'en-US-GuyNeural',
                 'rate': 'default'
+            },
+            'jenny': {
+                'voice': 'en-US-JennyNeural',
+                'rate': 'default'
+            },
+            'davis': {
+                'voice': 'en-US-DavisNeural',
+                'rate': '-10%'
             }
         }
         
         # Set the selected voice and rate
-        config = self.voice_config.get(voice_type, self.voice_config['female_fast'])
+        config = self.voice_config.get(voice_type, self.voice_config['female'])
         self.voice = config['voice']
         self.rate = config['rate']
 

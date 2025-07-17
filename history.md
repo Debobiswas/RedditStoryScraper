@@ -105,3 +105,28 @@
 
 ### Implemented By
 - Initial Project Setup Team 
+## 2025-07-17 at 23:29 - Multiple Voice Selection and Preview
+
+### Modified Files
+- `video-processor/text_to_speech.py`
+- `video-processor/tts_preview.py`
+- `backend/src/routes/tts.js`
+- `backend/src/index.js`
+- `frontend/src/app/generate/page.tsx`
+
+### Change Description
+- Added additional voice configurations (Aria, Jenny, Guy, Davis)
+- Created new Python script and backend route for generating short voice previews
+- Registered `/api/tts` routes in backend server
+- Updated frontend generation page with new voice options and a Preview button
+
+### Rationale
+- Allow users to choose from multiple text-to-speech voices
+- Enable quick audio previews before generating full videos
+
+### Potential Impacts
+- Requires Python environment to run new preview script
+- Slight increase in backend complexity and API surface
+
+### Implemented By
+- AI Assistant
