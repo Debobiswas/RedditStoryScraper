@@ -31,6 +31,12 @@ export default function GeneratePage() {
   const [backgroundType, setBackgroundType] = useState('');
   const [backgroundCategories, setBackgroundCategories] = useState<string[]>([]);
   const [voiceType, setVoiceType] = useState('female');
+  const voiceOptions = [
+    { value: 'female', label: 'Female (Aria)' },
+    { value: 'jenny', label: 'Female (Jenny)' },
+    { value: 'male', label: 'Male (Guy)' },
+    { value: 'davis', label: 'Male (Davis)' }
+  ];
   const [job, setJob] = useState<VideoJob | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -133,6 +139,24 @@ export default function GeneratePage() {
         console.error('Error polling job status:', error);
       }
     }, 2000);
+  };
+
+  const handlePreviewVoice = async () => {
+    try {
+      const response = await fetch('/api/tts/preview', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ voiceType })
+      });
+      if (!response.ok) throw new Error('Preview failed');
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      audio.play();
+    } catch (err) {
+      console.error('Voice preview error:', err);
+      toast.error('Failed to preview voice');
+    }
   };
 
   const handlePostSelect = (post: SavedPost) => {
@@ -313,17 +337,27 @@ export default function GeneratePage() {
 
                 {/* Voice Type */}
                 <div>
-                  <label className="block text-gray-900 font-medium mb-2">
-                    Voice
-                  </label>
-                  <select
-                    value={voiceType}
-                    onChange={(e) => setVoiceType(e.target.value)}
-                    className="form-input w-full px-4 py-3"
-                  >
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                  </select>
+                  <label className="block text-gray-900 font-medium mb-2">Voice</label>
+                  <div className="flex gap-2">
+                    <select
+                      value={voiceType}
+                      onChange={(e) => setVoiceType(e.target.value)}
+                      className="form-input flex-1 px-4 py-3"
+                    >
+                      {voiceOptions.map((opt) => (
+                        <option key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      type="button"
+                      onClick={handlePreviewVoice}
+                      className="btn-secondary whitespace-nowrap"
+                    >
+                      Preview
+                    </button>
+                  </div>
                 </div>
 
                 {/* Generate Button */}

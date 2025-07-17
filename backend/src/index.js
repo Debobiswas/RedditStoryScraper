@@ -11,6 +11,7 @@ const scrapeRoutes = require('./routes/scrape');
 const postsRoutes = require('./routes/posts');
 const backgroundRoutes = require('./routes/backgrounds');
 const videosRoutes = require('./routes/videos');
+const ttsRoutes = require('./routes/tts');
 const { initializeDatabase } = require('./utils/database');
 
 const app = express();
@@ -53,6 +54,7 @@ app.use('/api/scrape', scrapeRoutes);
 app.use('/api/posts', postsRoutes);
 app.use('/api/backgrounds', backgroundRoutes);
 app.use('/api/videos', videosRoutes);
+app.use('/api/tts', ttsRoutes);
 
 // Serve generated videos from the root output folder
 app.use('/output', express.static(path.join(__dirname, '..', '..', 'output')));
