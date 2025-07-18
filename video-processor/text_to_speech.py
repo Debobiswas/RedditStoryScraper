@@ -20,11 +20,11 @@ class TextToSpeechGenerator:
             },
             'male': {
                 'voice': 'en-US-GuyNeural',
-                'rate': 'default'
+                'rate': '+0%'
             },
             'jenny': {
                 'voice': 'en-US-JennyNeural',
-                'rate': 'default'
+                'rate': '+0%'
             },
             'davis': {
                 'voice': 'en-US-DavisNeural',

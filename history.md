@@ -23,6 +23,24 @@
 ### Implemented By
 - AI Assistant
 
+## 2025-07-18 at 01:01 - Fix Invalid TTS Rate
+
+### Modified Files
+- `video-processor/text_to_speech.py`
+
+### Change Description
+- Replaced invalid `'default'` rate values for male and jenny voices with `'+0%'`
+  to comply with edge-tts requirements.
+
+### Rationale
+- Prevent runtime errors when generating speech previews.
+
+### Potential Impacts
+- TTS output speed for male and jenny voices now matches the default rate.
+
+### Implemented By
+- AI Assistant
+
 ## 2024-02-15 at 15:45 - YouTube Downloader Implementation
 
 ### Modified Files
