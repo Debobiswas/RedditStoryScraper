@@ -10,6 +10,7 @@ A full-stack application that automatically creates narrated Reddit story videos
 - 🎥 **Background Videos**: Download and use YouTube videos as backgrounds
 - 📱 **Modern UI**: Clean, responsive frontend interface
 - 🔧 **Configurable**: Customize video length, voice, background type, and more
+- 💬 **AI Story Chat**: Brainstorm story ideas with an integrated OpenRouter chat
 
 ## Tech Stack
 
@@ -75,6 +76,7 @@ RedditStories/
 - **REDDIT_CLIENT_ID**: Your Reddit app client ID
 - **REDDIT_CLIENT_SECRET**: Your Reddit app client secret
 - **REDDIT_USER_AGENT**: Your app user agent string
+- **OPENROUTER_API_KEY**: API key for OpenRouter chat completions
 
 ## API Endpoints
 
