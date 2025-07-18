@@ -176,3 +176,29 @@
 
 ### Implemented By
 - AI Assistant
+
+## 2025-07-18 at 04:42 - Document OpenRouter API Key
+
+### Modified Files
+- `.env.example`
+- `README.md`
+- `setup.sh`
+- `setup.bat`
+- `backend/src/routes/chat.js`
+
+### Change Description
+- Added `.env.example` including `OPENROUTER_API_KEY`
+- Documented how to obtain and configure the OpenRouter key in README
+- Updated setup scripts to include the key placeholder and instructions
+- Clarified error message when the key is missing
+
+### Rationale
+- Users reported seeing "OpenRouter API key not configured" errors
+- Providing setup guidance and clearer messaging helps them configure the key correctly
+
+### Potential Impacts
+- New example env file aids onboarding but requires manual update of existing environments
+- Error message now more descriptive
+
+### Implemented By
+- AI Assistant

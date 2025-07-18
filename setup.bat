@@ -35,6 +35,9 @@ if not exist .env (
         echo REDDIT_CLIENT_SECRET=your_reddit_client_secret
         echo REDDIT_USER_AGENT=RedditStoryGenerator/1.0
         echo.
+        echo # OpenRouter API
+        echo OPENROUTER_API_KEY=your_openrouter_api_key
+        echo.
         echo # API Configuration
         echo NODE_ENV=development
         echo PORT=3001
@@ -46,7 +49,7 @@ if not exist .env (
         echo TEMP_DIR=./temp
         echo OUTPUT_DIR=./output
     ) > .env
-    echo ✅ .env file created. Please update it with your Reddit API credentials.
+    echo ✅ .env file created. Please update it with your Reddit and OpenRouter API credentials.
 )
 
 :: Create necessary directories
@@ -72,8 +75,9 @@ cd video-processor && pip install -r requirements.txt && cd ..
 echo ✅ Setup complete!
 echo.
 echo 📋 Next steps:
-echo 1. Update .env file with your Reddit API credentials
+echo 1. Update .env file with your Reddit and OpenRouter API credentials
 echo 2. Get Reddit API credentials from: https://www.reddit.com/prefs/apps
+echo    Get OpenRouter API key from: https://openrouter.ai
 echo.
 echo 🚀 To start the application:
 if "%DOCKER_AVAILABLE%"=="true" (

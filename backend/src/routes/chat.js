@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
   }
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: 'OpenRouter API key not configured' });
+    return res.status(500).json({ error: 'OpenRouter API key missing. Set OPENROUTER_API_KEY in your environment.' });
   }
   try {
     const response = await axios.post(

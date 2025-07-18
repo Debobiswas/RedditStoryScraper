@@ -31,8 +31,9 @@ cd RedditStories
 # Copy environment file
 cp .env.example .env
 
-# Add your Reddit API credentials to .env
-# Get them from: https://www.reddit.com/prefs/apps
+# Add your Reddit API credentials and OpenRouter API key to .env
+# Reddit credentials: https://www.reddit.com/prefs/apps
+# OpenRouter key: https://openrouter.ai
 
 # Start with Docker (recommended)
 docker-compose up --build
@@ -77,6 +78,8 @@ RedditStories/
 - **REDDIT_CLIENT_SECRET**: Your Reddit app client secret
 - **REDDIT_USER_AGENT**: Your app user agent string
 - **OPENROUTER_API_KEY**: API key for OpenRouter chat completions
+
+To obtain an OpenRouter API key, create an account at [openrouter.ai](https://openrouter.ai) and generate a new key. Add the key to your `.env` file as `OPENROUTER_API_KEY`.
 
 ## API Endpoints
 
