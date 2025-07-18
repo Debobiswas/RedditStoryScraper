@@ -22,6 +22,23 @@
 
 ### Implemented By
 - AI Assistant
+## 2025-07-18 at 00:10 - Fix TTS preview rate error
+
+### Modified Files
+- `video-processor/text_to_speech.py`
+
+### Change Description
+- Updated voice configuration for male and Jenny voices to use `+0%` rate
+  instead of invalid `default` value.
+
+### Rationale
+- Prevent runtime error when generating TTS previews with these voices.
+
+### Potential Impacts
+- Audio rate now explicitly set to normal speed for affected voices.
+
+### Implemented By
+- AI Assistant
 
 ## 2024-02-15 at 15:45 - YouTube Downloader Implementation
 
