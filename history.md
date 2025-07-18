@@ -23,6 +23,34 @@
 ### Implemented By
 - AI Assistant
 
+## 2025-07-18 at 01:41 - AI Story Chat Page
+
+### Modified Files
+- `backend/src/routes/chat.js`
+- `backend/src/index.js`
+- `docker-compose.yml`
+- `frontend/src/app/story-ai/page.tsx`
+- `frontend/src/app/layout.tsx`
+- `README.md`
+
+### Change Description
+- Added new backend route proxying to OpenRouter API for AI chat
+- Registered `/api/chat` route in Express server and environment variable
+- Created story AI page in frontend with chat interface using the route
+- Linked new page in site navigation
+- Documented new environment variable and feature
+
+### Rationale
+- Allow users to generate story ideas via AI chat
+- Provide direct OpenRouter integration for brainstorming scripts
+
+### Potential Impacts
+- Requires `OPENROUTER_API_KEY` environment variable
+- Chat API errors may be surfaced to users
+
+### Implemented By
+- AI Assistant
+
 ## 2025-07-18 at 01:01 - Fix Invalid TTS Rate
 
 ### Modified Files
